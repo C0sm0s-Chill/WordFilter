@@ -33,6 +33,7 @@ Professional chat filtering plugin with progressive sanctions system and chat bu
 /wf warnings <player>           # Check specific player
 /wf resetwarnings <player>      # Reset player warnings
 /wf config                      # View configuration
+/wf reload                      # Reload the plugin
 ```
 
 ### Configuration
@@ -47,7 +48,7 @@ Edit `WordFilterConfig.json`:
   "WarningsBeforeBan": 5,
   "BanDurationMinutes": 60,
   "ResetWarningsAfterMinutes": 30,
-  "ImmunityGroups": ["superadmin", "admin"]
+  "ImmunityGroups": ["owner","superadmin", "admin"]
 }
 ```
 
@@ -107,6 +108,7 @@ Plugin professionnel de filtrage de chat avec système de sanctions progressives
 /wf warnings <joueur>           # Vérifier un joueur
 /wf resetwarnings <joueur>      # Réinitialiser avertissements
 /wf config                      # Voir la configuration
+/wf reload                      # Recharger le plugin
 ```
 
 ### Configuration
@@ -121,7 +123,7 @@ Plugin professionnel de filtrage de chat avec système de sanctions progressives
   "WarningsBeforeBan": 5,
   "BanDurationMinutes": 60,
   "ResetWarningsAfterMinutes": 30,
-  "ImmunityGroups": ["superadmin", "admin"]
+  "ImmunityGroups": ["owner","superadmin", "admin"]
 }
 ```
 
@@ -151,5 +153,3 @@ Plugin professionnel de filtrage de chat avec système de sanctions progressives
 - Base de données : SQLite/MySQL (DB TShock)
 
 ---
-
-**Made with ❤️ by C0sm0s**
