@@ -1,0 +1,23 @@
+{
+  "ChatAboveHead": true,
+  "ChatAboveHeadDuration": 500,
+  "MaxMessageLength": 80,
+  "ShowForDeadPlayers": true,
+  "ExcludedGroups": [],
+  "EnableWarnings": true,
+  "WarningsBeforeKick": 3,
+  "WarningsBeforeBan": 5,
+  "BanDurationMinutes": 60,
+  "ResetWarningsAfterMinutes": 30,
+  "WarningMessage": "[WordFilter] Warning {current}/{max} before kick: Do not use inappropriate language!",
+  "KickMessage": "Kicked for inappropriate language! You have {remaining} more warnings before a {duration} minute ban.",
+  "BanMessage": "Banned for {duration} minutes for repeated use of inappropriate language.",
+  "ImmunityGroups": [
+    "superadmin",
+    "owner",
+    "admin"
+  ]
+}
+
+
+
