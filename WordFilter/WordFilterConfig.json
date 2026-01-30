@@ -10,14 +10,27 @@
   "BanDurationMinutes": 60,
   "ResetWarningsAfterMinutes": 30,
   "WarningMessage": "[WordFilter] Warning {current}/{max} before kick: Do not use inappropriate language!",
+  "WarningAfterKickMessage": "[WordFilter] Warning {current}/{max} before BAN ({duration} minutes): Do not use inappropriate language!",
   "KickMessage": "Kicked for inappropriate language! You have {remaining} more warnings before a {duration} minute ban.",
   "BanMessage": "Banned for {duration} minutes for repeated use of inappropriate language.",
+  "CommandAddSuccessMessage": "Added word filter: '{word}' -> '{replacement}'",
+  "CommandRemoveSuccessMessage": "Removed word filter: '{word}'",
+  "CommandListNoWordsMessage": "No filtered words configured.",
+  "CommandListHeaderMessage": "Filtered words ({count}):",
+  "CommandReloadSuccessMessage": "Word filter and config reloaded from database.",
+  "CommandWarningsNoWarningsMessage": "No players have warnings.",
+  "CommandWarningsHeaderMessage": "=== Player Warnings ({count}) ===",
+  "CommandWarningInfoMessage": "{player}: {warnings} warnings (Last: {time} ago)",
+  "CommandPlayerNoWarningsMessage": "{player} has no warnings.",
+  "CommandPlayerWarningDetailsMessage": "{player}: {warnings} warnings - Last warning: {time} ago",
+  "CommandResetWarningsSuccessMessage": "Warnings reset for {player}",
+  "CommandPlayerNotFoundMessage": "Player not found.",
+  "TimeMinutesFormat": "{0:F1}m",
+  "TimeHoursFormat": "{0:F1}h",
+  "TimeDaysFormat": "{0:F1}d",
   "ImmunityGroups": [
     "superadmin",
     "owner",
     "admin"
   ]
 }
-
-
-

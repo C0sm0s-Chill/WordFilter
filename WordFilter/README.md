@@ -7,7 +7,7 @@
 <a name="english"></a>
 ## 🇬🇧 English
 
-Professional chat filtering plugin with progressive sanctions system and chat bubbles.
+Chat filtering plugin with progressive sanctions system and chat bubbles.
 
 ### Features
 
@@ -82,7 +82,7 @@ Edit `WordFilterConfig.json`:
 <a name="français"></a>
 ## 🇫🇷 Français
 
-Plugin professionnel de filtrage de chat avec système de sanctions progressives et bulles de chat.
+Plugin de filtrage de chat avec système de sanctions progressives et bulles de chat.
 
 ### Fonctionnalités
 

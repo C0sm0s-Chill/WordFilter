@@ -41,7 +41,11 @@ namespace WordFilter
                     string word = args.Parameters[1];
                     string replacement = string.Join(" ", args.Parameters.Skip(2));
                     plugin.AddFilteredWord(word, replacement);
-                    args.Player.SendSuccessMessage($"Added word filter: '{word}' -> '{replacement}'");
+                    
+                    var addMessage = plugin.GetConfig().CommandAddSuccessMessage
+                        .Replace("{word}", word)
+                        .Replace("{replacement}", replacement);
+                    args.Player.SendSuccessMessage(addMessage);
                     break;
 
                 case "remove":
@@ -53,18 +57,26 @@ namespace WordFilter
                     }
                     word = args.Parameters[1];
                     plugin.RemoveFilteredWord(word);
-                    args.Player.SendSuccessMessage($"Removed word filter: '{word}'");
+                    
+                    var removeMessage = plugin.GetConfig().CommandRemoveSuccessMessage
+                        .Replace("{word}", word);
+                    args.Player.SendSuccessMessage(removeMessage);
                     break;
 
                 case "list":
                     var words = plugin.GetFilteredWords();
+                    var listCfg = plugin.GetConfig();
+                    
                     if (words.Count == 0)
                     {
-                        args.Player.SendInfoMessage("No filtered words configured.");
+                        args.Player.SendInfoMessage(listCfg.CommandListNoWordsMessage);
                     }
                     else
                     {
-                        args.Player.SendInfoMessage($"Filtered words ({words.Count}):");
+                        var headerMessage = listCfg.CommandListHeaderMessage
+                            .Replace("{count}", words.Count.ToString());
+                        args.Player.SendInfoMessage(headerMessage);
+                        
                         foreach (var kvp in words)
                         {
                             args.Player.SendInfoMessage($"  '{kvp.Key}' -> '{kvp.Value}'");
@@ -75,7 +87,7 @@ namespace WordFilter
                 case "reload":
                     plugin.ReloadFilteredWords();
                     plugin.ReloadConfig();
-                    args.Player.SendSuccessMessage("Word filter and config reloaded from database.");
+                    args.Player.SendSuccessMessage(plugin.GetConfig().CommandReloadSuccessMessage);
                     break;
 
                 case "config":
@@ -158,31 +170,42 @@ namespace WordFilter
                 case "warn":
                     if (args.Parameters.Count < 2)
                     {
-                        // Afficher tous les warnings
                         var allWarnings = plugin.GetAllWarnings();
+                        var cfg = plugin.GetConfig();
+                        
                         if (allWarnings.Count == 0)
                         {
-                            args.Player.SendInfoMessage("No players have warnings.");
+                            args.Player.SendInfoMessage(cfg.CommandWarningsNoWarningsMessage);
                             return;
                         }
 
-                        args.Player.SendInfoMessage($"=== Player Warnings ({allWarnings.Count}) ===");
+                        var headerMsg = cfg.CommandWarningsHeaderMessage
+                            .Replace("{count}", allWarnings.Count.ToString());
+                        args.Player.SendInfoMessage(headerMsg);
+                        
                         foreach (var kvp in allWarnings.OrderByDescending(w => w.Value.WarningCount))
                         {
                             if (kvp.Value.WarningCount > 0)
                             {
                                 var timeSince = DateTime.Now - kvp.Value.LastWarningTime;
-                                args.Player.SendInfoMessage($"{kvp.Value.PlayerName}: {kvp.Value.WarningCount} warnings (Last: {timeSince.TotalMinutes:F1}m ago)");
+                                string timeFormat = FormatTime(timeSince, cfg);
+                                
+                                var infoMsg = cfg.CommandWarningInfoMessage
+                                    .Replace("{player}", kvp.Value.PlayerName)
+                                    .Replace("{warnings}", kvp.Value.WarningCount.ToString())
+                                    .Replace("{time}", timeFormat);
+                                args.Player.SendInfoMessage(infoMsg);
                             }
                         }
                     }
                     else
                     {
-                        // Afficher les warnings d'un joueur spécifique
                         var targetPlayers = TSPlayer.FindByNameOrID(args.Parameters[1]);
+                        var cfg = plugin.GetConfig();
+                        
                         if (targetPlayers.Count == 0)
                         {
-                            args.Player.SendErrorMessage("Player not found.");
+                            args.Player.SendErrorMessage(cfg.CommandPlayerNotFoundMessage);
                             return;
                         }
 
@@ -191,13 +214,20 @@ namespace WordFilter
                         
                         if (warning.WarningCount == 0)
                         {
-                            args.Player.SendInfoMessage($"{target.Name} has no warnings.");
+                            var noWarnMsg = cfg.CommandPlayerNoWarningsMessage
+                                .Replace("{player}", target.Name);
+                            args.Player.SendInfoMessage(noWarnMsg);
                         }
                         else
                         {
                             var timeSince = DateTime.Now - warning.LastWarningTime;
-                            args.Player.SendInfoMessage($"{target.Name}: {warning.WarningCount} warnings");
-                            args.Player.SendInfoMessage($"Last warning: {timeSince.TotalMinutes:F1} minutes ago");
+                            string timeFormat = FormatTime(timeSince, cfg);
+                            
+                            var detailsMsg = cfg.CommandPlayerWarningDetailsMessage
+                                .Replace("{player}", target.Name)
+                                .Replace("{warnings}", warning.WarningCount.ToString())
+                                .Replace("{time}", timeFormat);
+                            args.Player.SendInfoMessage(detailsMsg);
                         }
                     }
                     break;
@@ -211,15 +241,20 @@ namespace WordFilter
                     }
 
                     var resetTargets = TSPlayer.FindByNameOrID(args.Parameters[1]);
+                    var resetCfg = plugin.GetConfig();
+                    
                     if (resetTargets.Count == 0)
                     {
-                        args.Player.SendErrorMessage("Player not found.");
+                        args.Player.SendErrorMessage(resetCfg.CommandPlayerNotFoundMessage);
                         return;
                     }
 
                     var resetTarget = resetTargets[0];
                     plugin.ResetPlayerWarnings(resetTarget.UUID);
-                    args.Player.SendSuccessMessage($"Warnings reset for {resetTarget.Name}");
+                    
+                    var resetMsg = resetCfg.CommandResetWarningsSuccessMessage
+                        .Replace("{player}", resetTarget.Name);
+                    args.Player.SendSuccessMessage(resetMsg);
                     TShockAPI.TShock.Log.ConsoleInfo($"[WordFilter] {args.Player.Name} reset warnings for {resetTarget.Name}");
                     break;
 
@@ -227,6 +262,15 @@ namespace WordFilter
                     args.Player.SendErrorMessage("Unknown subcommand. Use: add, remove, list, reload, config, warnings, or resetwarnings");
                     break;
             }
+        }
+
+        private static string FormatTime(TimeSpan timeSpan, Config config)
+        {
+            if (timeSpan.TotalDays >= 1)
+                return string.Format(config.TimeDaysFormat, timeSpan.TotalDays);
+            if (timeSpan.TotalHours >= 1)
+                return string.Format(config.TimeHoursFormat, timeSpan.TotalHours);
+            return string.Format(config.TimeMinutesFormat, timeSpan.TotalMinutes);
         }
     }
 }

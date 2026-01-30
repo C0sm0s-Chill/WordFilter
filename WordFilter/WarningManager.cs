@@ -49,8 +49,7 @@ namespace WordFilter
 
         public WarningManager()
         {
-            // Ne pas charger depuis la DB ici car TShock.DB peut être null
-            // Le chargement se fera à la demande via GetOrCreateWarning
+            // Nothing here for now
         }
 
         public PlayerWarning GetOrCreateWarning(string uuid, string playerName)
@@ -147,7 +146,6 @@ namespace WordFilter
                     }
                     else
                     {
-                        // Nouveau joueur
                         _warnings[uuid] = new PlayerWarning(playerName, uuid);
                     }
                 }
@@ -201,7 +199,6 @@ namespace WordFilter
                     return;
                 }
 
-                // REPLACE fonctionne pour SQLite et MySQL
                 TShock.DB.Query(
                     "REPLACE INTO WordFilterWarnings (UUID, PlayerName, WarningCount, LastWarningTime) VALUES (@0, @1, @2, @3)",
                     warning.UUID,

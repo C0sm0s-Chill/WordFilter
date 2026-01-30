@@ -113,7 +113,6 @@ namespace WordFilter
 
             string originalText = args.Text;
 
-            // Ne pas afficher les commandes au-dessus de la tête
             bool isCommand = originalText.StartsWith(TShockAPI.Commands.Specifier) || 
                             originalText.StartsWith(TShockAPI.Commands.SilentSpecifier);
 
@@ -216,7 +215,10 @@ namespace WordFilter
                 int warningsSinceKick = currentWarnings - _config.WarningsBeforeKick;
                 int totalWarningsUntilBan = _config.WarningsBeforeBan - _config.WarningsBeforeKick;
                 
-                warningMessage = $"[WordFilter] Warning {warningsSinceKick}/{totalWarningsUntilBan} before BAN ({_config.BanDurationMinutes} minutes): Do not use inappropriate language!";
+                warningMessage = _config.WarningAfterKickMessage
+                    .Replace("{current}", warningsSinceKick.ToString())
+                    .Replace("{max}", totalWarningsUntilBan.ToString())
+                    .Replace("{duration}", _config.BanDurationMinutes.ToString());
             }
 
             player.SendErrorMessage(warningMessage);
