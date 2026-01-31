@@ -1,4 +1,4 @@
-# WordFilter for TShock 5.2.4
+﻿# WordFilter for TShock 5.2.4
 
 **[🇬🇧 English](#english)** | **[🇫🇷 Français](#français)**
 

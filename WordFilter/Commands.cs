@@ -171,31 +171,29 @@ namespace WordFilter
                     if (args.Parameters.Count < 2)
                     {
                         var allWarnings = plugin.GetAllWarnings();
+                        var activeWarnings = allWarnings.Where(w => w.Value.WarningCount > 0).ToList();
                         var cfg = plugin.GetConfig();
                         
-                        if (allWarnings.Count == 0)
+                        if (activeWarnings.Count == 0)
                         {
                             args.Player.SendInfoMessage(cfg.CommandWarningsNoWarningsMessage);
                             return;
                         }
 
                         var headerMsg = cfg.CommandWarningsHeaderMessage
-                            .Replace("{count}", allWarnings.Count.ToString());
+                            .Replace("{count}", activeWarnings.Count.ToString());
                         args.Player.SendInfoMessage(headerMsg);
                         
-                        foreach (var kvp in allWarnings.OrderByDescending(w => w.Value.WarningCount))
+                        foreach (var kvp in activeWarnings.OrderByDescending(w => w.Value.WarningCount))
                         {
-                            if (kvp.Value.WarningCount > 0)
-                            {
-                                var timeSince = DateTime.Now - kvp.Value.LastWarningTime;
-                                string timeFormat = FormatTime(timeSince, cfg);
-                                
-                                var infoMsg = cfg.CommandWarningInfoMessage
-                                    .Replace("{player}", kvp.Value.PlayerName)
-                                    .Replace("{warnings}", kvp.Value.WarningCount.ToString())
-                                    .Replace("{time}", timeFormat);
-                                args.Player.SendInfoMessage(infoMsg);
-                            }
+                            var timeSince = DateTime.Now - kvp.Value.LastWarningTime;
+                            string timeFormat = FormatTime(timeSince, cfg);
+                            
+                            var infoMsg = cfg.CommandWarningInfoMessage
+                                .Replace("{player}", kvp.Value.PlayerName)
+                                .Replace("{warnings}", kvp.Value.WarningCount.ToString())
+                                .Replace("{time}", timeFormat);
+                            args.Player.SendInfoMessage(infoMsg);
                         }
                     }
                     else
