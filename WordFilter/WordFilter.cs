@@ -116,6 +116,9 @@ namespace WordFilter
             bool isCommand = originalText.StartsWith(TShockAPI.Commands.Specifier) || 
                             originalText.StartsWith(TShockAPI.Commands.SilentSpecifier);
 
+            if (isCommand)
+                return;
+
             string filteredText = FilterMessage(originalText);
 
             if (filteredText != originalText)
