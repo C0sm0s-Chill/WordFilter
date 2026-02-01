@@ -20,7 +20,7 @@ namespace WordFilter
         public List<string> ExcludedGroups { get; set; } = new List<string>();
 
         [JsonProperty("ExcludedCommands")]
-        public List<string> ExcludedCommands { get; set; } = new List<string> { "wf", "msg", "tell", "w", "whisper", "mail", "pm" };
+        public List<string> ExcludedCommands { get; set; } = new List<string> { "say", "wf" };
 
         // Système de sanctions
         [JsonProperty("EnableWarnings")]
@@ -97,7 +97,7 @@ namespace WordFilter
         public string TimeDaysFormat { get; set; } = "{0:F1}d";
 
         [JsonProperty("ImmunityGroups")]
-        public List<string> ImmunityGroups { get; set; } = new List<string> { "owner", "superadmin", "admin" };
+        public List<string> ImmunityGroups { get; set; } = new List<string> { "superadmin", "admin" };
 
         public static Config Read(string path)
         {

@@ -6,12 +6,8 @@
   "ExcludedGroups": [],
   "ExcludedCommands": [
     "say",
-    "msg",
-    "tell",
-    "w",
-    "whisper",
-    "mail",
-    "pm"
+    "wf"
+
   ],
   "EnableWarnings": true,
   "WarningsBeforeKick": 3,
