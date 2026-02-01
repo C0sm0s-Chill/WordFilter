@@ -4,6 +4,15 @@
   "MaxMessageLength": 80,
   "ShowForDeadPlayers": true,
   "ExcludedGroups": [],
+  "ExcludedCommands": [
+    "say",
+    "msg",
+    "tell",
+    "w",
+    "whisper",
+    "mail",
+    "pm"
+  ],
   "EnableWarnings": true,
   "WarningsBeforeKick": 3,
   "WarningsBeforeBan": 5,

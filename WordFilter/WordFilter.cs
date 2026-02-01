@@ -117,7 +117,12 @@ namespace WordFilter
                             originalText.StartsWith(TShockAPI.Commands.SilentSpecifier);
 
             if (isCommand)
-                return;
+            {
+                string commandName = originalText.TrimStart('/', '.').Split(' ')[0].ToLower();
+                
+                if (_config.ExcludedCommands.Contains(commandName))
+                    return;
+            }
 
             string filteredText = FilterMessage(originalText);
 

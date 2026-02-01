@@ -19,6 +19,9 @@ namespace WordFilter
         [JsonProperty("ExcludedGroups")]
         public List<string> ExcludedGroups { get; set; } = new List<string>();
 
+        [JsonProperty("ExcludedCommands")]
+        public List<string> ExcludedCommands { get; set; } = new List<string> { "wf", "msg", "tell", "w", "whisper", "mail", "pm" };
+
         // Système de sanctions
         [JsonProperty("EnableWarnings")]
         public bool EnableWarnings { get; set; } = true;
