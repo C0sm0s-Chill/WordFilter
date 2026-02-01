@@ -19,7 +19,7 @@ namespace WordFilter
         [JsonProperty("ExcludedGroups")]
         public List<string> ExcludedGroups { get; set; } = new List<string>();
 
-        // Système de sanctions
+        // SystÃ¨me de sanctions
         [JsonProperty("EnableWarnings")]
         public bool EnableWarnings { get; set; } = true;
 
@@ -94,7 +94,7 @@ namespace WordFilter
         public string TimeDaysFormat { get; set; } = "{0:F1}d";
 
         [JsonProperty("ImmunityGroups")]
-        public List<string> ImmunityGroups { get; set; } = new List<string> { "superadmin", "admin" };
+        public List<string> ImmunityGroups { get; set; } = new List<string> { "owner", "superadmin", "admin" };
 
         public static Config Read(string path)
         {
