@@ -1,4 +1,4 @@
-﻿# WordFilter for TShock 5.2.4
+# WordFilter for TShock 5.2.4
 
 **[🇬🇧 English](#english)** | **[🇫🇷 Français](#français)**
 
@@ -48,7 +48,8 @@ Edit `WordFilterConfig.json`:
   "WarningsBeforeBan": 5,
   "BanDurationMinutes": 60,
   "ResetWarningsAfterMinutes": 30,
-  "ImmunityGroups": ["owner","superadmin", "admin"]
+  "ExcludedCommands": ["say","wf"],
+  "ImmunityGroups": ["superadmin","admin"]
 }
 ```
 
@@ -66,10 +67,7 @@ Edit `WordFilterConfig.json`:
 
 ### Permissions
 
-```bash
-
-- wordfilter.manage
-```
+`wordfilter.manage`
 
 ### Technical Details
 
@@ -123,7 +121,8 @@ Plugin de filtrage de chat avec système de sanctions progressives et bulles de 
   "WarningsBeforeBan": 5,
   "BanDurationMinutes": 60,
   "ResetWarningsAfterMinutes": 30,
-  "ImmunityGroups": ["owner","superadmin", "admin"]
+  "ExcludedCommands": ["say","wf"],
+  "ImmunityGroups": ["superadmin","admin"]
 }
 ```
 
@@ -141,10 +140,7 @@ Plugin de filtrage de chat avec système de sanctions progressives et bulles de 
 
 ### Permissions
 
-```bash
-
-- wordfilter.manage
-```
+`wordfilter.manage`
 
 ### Détails Techniques
 
